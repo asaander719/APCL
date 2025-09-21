@@ -1,0 +1,7 @@
+dataset/
+saved/
+clip_features_dict.pt
+*.ipynb
+missing_items.json
+poly_user_sim_att_infoNCE_2_29_top.ipynb
+model_analysis.ipynb
