@@ -1,0 +1,82 @@
+{
+  "example": "IQON3000 RB, seed 42",
+  "selection": "Best supplied-pair validation AUC; checkpoint selected before test evaluation",
+  "training": {
+    "status": "validation_complete",
+    "dataset": "IQON3000",
+    "mode": "RB",
+    "seed": 42,
+    "profile": "paper_entry",
+    "best_epoch": 10,
+    "epochs_run": 18,
+    "validation_supplied_pair_auc": 0.9667460489283395,
+    "n_valid": 23095,
+    "train_s": 1322.5707793729998,
+    "validation_s": 44.5684354729965,
+    "elapsed_s": 1431.0308109120015,
+    "peak_cuda_allocated_mib": 4176.66552734375,
+    "parameters": 186618618,
+    "checkpoint_sha256": "eceaf279a9a607d73c797f0f9ca208c91cfab85a72403e5f1f356299b7853058",
+    "test_evaluated": false
+  },
+  "validation": {
+    "dataset": "IQON3000",
+    "mode": "RB",
+    "split": "valid",
+    "n": 23095,
+    "seed": 42,
+    "supplied_pair_auc": 0.9667460489283395,
+    "ties": 0,
+    "batch_size": 512,
+    "evaluation_s": 2.784903822997876,
+    "checkpoint_sha256": "eceaf279a9a607d73c797f0f9ca208c91cfab85a72403e5f1f356299b7853058",
+    "protocol": "Supplied positive/negative pairs; forward score; ties half; no rank metrics inferred",
+    "data": {
+      "train": "83d31d7db200ce163f62c1a794057e4b636587af03287eba4e7a38c972396ee7",
+      "valid": "99e382962f6cc80f0b41a95dd8ba98cebfb47e27a27476d0d7a00361cf09f193",
+      "test": "4c4ed42e07b4557fa8a1b46c485c41349b561839015981034e042d807f129784",
+      "user_map": "93fbcf0dd8253d5bc073e4254943828352776e893973148b103cdde1f7447711",
+      "item_map": "db13dcfd4f9b7db7ee5ad5a68f56fbd3927cf44245e3c1c09e7e4fb041b7d281",
+      "visual": "cdd5518f57ca83376e4ff1c30b701600afc647342280c430ef14881c4fe59e74",
+      "text": "a405ede8e64c18464985dd7f0ac5b818f9d07f3f49cb5f1dfe908e959c91ee93",
+      "embedding": "14fe91ba4a1ad0484c6dbcc03ad09227a4350c1ce307d349fac4e40c40e078fa"
+    },
+    "environment": {
+      "torch": "2.14.0+cu130",
+      "numpy": "2.5.3",
+      "cuda": "13.0",
+      "gpu": "NVIDIA GeForce RTX 3090"
+    }
+  },
+  "test": {
+    "dataset": "IQON3000",
+    "mode": "RB",
+    "split": "test",
+    "n": 23095,
+    "seed": 42,
+    "supplied_pair_auc": 0.9498592768997619,
+    "ties": 0,
+    "batch_size": 512,
+    "evaluation_s": 2.777215250000154,
+    "checkpoint_sha256": "eceaf279a9a607d73c797f0f9ca208c91cfab85a72403e5f1f356299b7853058",
+    "protocol": "Supplied positive/negative pairs; forward score; ties half; no rank metrics inferred",
+    "data": {
+      "train": "83d31d7db200ce163f62c1a794057e4b636587af03287eba4e7a38c972396ee7",
+      "valid": "99e382962f6cc80f0b41a95dd8ba98cebfb47e27a27476d0d7a00361cf09f193",
+      "test": "4c4ed42e07b4557fa8a1b46c485c41349b561839015981034e042d807f129784",
+      "user_map": "93fbcf0dd8253d5bc073e4254943828352776e893973148b103cdde1f7447711",
+      "item_map": "db13dcfd4f9b7db7ee5ad5a68f56fbd3927cf44245e3c1c09e7e4fb041b7d281",
+      "visual": "cdd5518f57ca83376e4ff1c30b701600afc647342280c430ef14881c4fe59e74",
+      "text": "a405ede8e64c18464985dd7f0ac5b818f9d07f3f49cb5f1dfe908e959c91ee93",
+      "embedding": "14fe91ba4a1ad0484c6dbcc03ad09227a4350c1ce307d349fac4e40c40e078fa"
+    },
+    "environment": {
+      "torch": "2.14.0+cu130",
+      "numpy": "2.5.3",
+      "cuda": "13.0",
+      "gpu": "NVIDIA GeForce RTX 3090"
+    }
+  },
+  "python": "3.12.3",
+  "scope": "One observed run, not a mean or significance test; no HR/NDCG claims; no dataset or weights distributed"
+}

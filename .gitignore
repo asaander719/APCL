@@ -11,4 +11,13 @@ run_APCL_IQON_RT_ori.py
 run_APCL_IQON_RT_ori.py
 run_APCL_IQON_RT.py
 run_APCL_Polyvore_RT.py
-clip_features_dict.pt 
+clip_features_dict.pt
+# Reproduction outputs and local environments
+/runs/
+/.venv*/
+__pycache__/
+*.pyc
+*.pt
+*.pth
+*.npz
+!reproduction/requirements.txt

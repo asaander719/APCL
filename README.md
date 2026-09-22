@@ -1,39 +1,88 @@
+# APCL: Personalized Fashion Matching with Contrastive Learning
 
-# APCL: Adaptive Preference Modeling with Contrastive Learning for Fashion Matching
+APCL learns personalized clothing compatibility from visual features, text, and
+historical interactions. This repository includes a **standalone, verified
+IQON3000 example** for Specified Top / Recommend Bottom (RB).
 
+## Verified example
 
-Official implementation of **APCL (Adaptive Preference modeling with Contrastive Learning)**, a novel framework for personalized fashion complementary recommendation that integrates multi-modal data, indirect relationships, and contrastive learning.
+One run with seed **42**, selected by validation AUC at **epoch 10**:
 
-## 📖 Abstract
+| Split | Requests | Supplied-pair AUC |
+|---|---:|---:|
+| Validation | 23,095 | 0.966746 |
+| Test | 23,095 | **0.949859** |
 
-Fashion complementary recommendation faces unique challenges: personalization needs, multi-modal data complexity, and severe data sparsity. APCL addresses these by:
+These are actual results from the included configuration, not averages or
+significance-test results. The observed test AUC remains below the paper's
+reported IQON3000 RB AUC of 0.9739; this example does **not** claim exact
+reproduction of that number. Validation is never reported as test performance.
+See the [result record](reproduction/example/run.json) and
+[complete training log](reproduction/example/epochs.jsonl).
 
-- **Adaptive Preference Modules**: Mining implicit user-product relationships through attention-based transformers
-- **Dual Contrastive Learning**: Aligning functional views (Personal vs Indirect Personal, Compatibility vs Indirect Compatibility) across modalities
-- **Multi-modal Integration**: Leveraging both visual and textual features for comprehensive compatibility modeling
+## Quick start
 
-## 🚀 Features
+Use Python 3.12 and a CUDA-enabled PyTorch installation appropriate for your GPU.
 
-- **Multi-modal Fusion**: Integrates visual and textual features using pre-trained CLIP encoders
-- **Adaptive Preference Modeling**: Captures indirect user-product relationships to alleviate data sparsity
-- **Dual Contrastive Loss**: Aligns direct and indirect representations across different functional views
-- **BPR Integration**: Combines Bayesian Personalized Ranking with contrastive learning for optimized recommendations
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r reproduction/requirements.txt
+```
 
+Download the [indexed datasets](https://drive.google.com/file/d/1Dg7918zUGcL7tzs_OisNzc_FxYlQMG4E/view?usp=sharing)
+separately. `--data-root` must point to the directory containing `IQON3000/`.
+The required files and their checksums are documented in
+[reproduction/README.md](reproduction/README.md).
 
-## 🏗️ Model Architecture
+Train and select the best checkpoint using validation only:
 
-The APCL framework consists of four main components:
-1. **Personal Preference Module (P)**: Models user-specific preferences
-2. **Product Compatibility Module (C)**: Learns item-item compatibility
-3. **Indirect Personal Preference (IP)**: Captures implicit user relationships
-4. **Indirect Compatibility (IC)**: Models implicit item compatibility
+```bash
+python -m apcl_repro.train \
+  --config reproduction/configs/iqon_rb.json \
+  --data-root /path/to/dataset \
+  --device cuda:0 \
+  --output runs/iqon_rb_seed42 \
+  --trusted-feature-pickle
+```
 
-## ⚙️ Datasets
-- Download the two public datasets we use in the paper at:
-  https://drive.google.com/file/d/1Dg7918zUGcL7tzs_OisNzc_FxYlQMG4E/view?usp=sharing
+Evaluate the selected checkpoint on the test split:
 
-- Unzip the datasets and move them to **./dataset/**
+```bash
+python -m apcl_repro.evaluate \
+  --config runs/iqon_rb_seed42/config.json \
+  --data-root /path/to/dataset \
+  --checkpoint runs/iqon_rb_seed42/best.pt \
+  --device cuda:0 \
+  --output runs/iqon_rb_seed42/test \
+  --trusted-feature-pickle
+```
 
-## 📥 Training
+The pickle option is for the original, trusted legacy feature files. Corrupt or
+truncated files are rejected, never replaced with synthetic features.
 
-`python APCL/run_APCL_Polyvore_RB.py`
+## What is included
+
+- `apcl_repro/`: APCL and its internal BPR/VTBPR/TextCNN components, deterministic
+  history construction, training, checkpoint selection, and pair evaluation.
+- `reproduction/configs/iqon_rb.json`: the single documented example configuration.
+- `reproduction/example/`: measured results and the original 18-epoch training log.
+- `reproduction/tests/`: data-isolation, metric, and corruption checks.
+
+The standalone package does not require other baseline models or the earlier
+benchmarking framework. Existing historical scripts in this repository are
+retained; use the commands above for the verified example.
+
+Datasets, feature tensors, user-level predictions, and trained weights are not
+included in the source package. Training creates the checkpoint locally.
+
+## Evaluation scope
+
+AUC is the fraction of supplied positive/negative pairs correctly ordered by
+the documented forward score; ties receive half credit. It is not a pooled ROC
+AUC or an AUC over a newly sampled candidate set. HR@10 and NDCG@10 are not
+reported in this minimal example because they require a separately specified
+ranking candidate protocol. They cannot be inferred from AUC.
+
+See [the reproduction notes](reproduction/README.md) for parameter provenance,
+model-version details, and reproducibility checks.

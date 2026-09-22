@@ -1,0 +1,31 @@
+{
+  "standalone_unit_tests": {
+    "passed": 5,
+    "failed": 0
+  },
+  "selected_checkpoint_validation": {
+    "n": 23095,
+    "identical_rows": true,
+    "bitwise_identical_score_differences": true,
+    "max_absolute_difference": 0.0
+  },
+  "full_first_training_epoch": {
+    "lr": {
+      "original": 0.001,
+      "standalone": 0.001,
+      "equal": true
+    },
+    "loss_per_training_row": {
+      "original": 0.5878359110684724,
+      "standalone": 0.5878359110684724,
+      "equal": true
+    },
+    "validation_supplied_pair_auc": {
+      "original": 0.8567655336652955,
+      "standalone": 0.8567655336652955,
+      "equal": true
+    }
+  },
+  "full_retraining_in_standalone_package": false,
+  "notes": "All 18 epochs were run by the audited source runner. The extracted standalone package was verified on a complete first training epoch and all validation scores from the selected best checkpoint."
+}
